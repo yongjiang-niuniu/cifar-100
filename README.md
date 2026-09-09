@@ -1,49 +1,81 @@
 # CIFAR-100 Image Classification Experiments
 
-PyTorch notebooks exploring **ResNet and Vision Transformer models on CIFAR-100**, with training curves, checkpoint saving, and image-perturbation experiments. The repository name is preserved as `cider-100`; the dataset used by the code is CIFAR-100.
+PyTorch experiments for adapting **ResNet and Vision Transformer classifiers to CIFAR-100**, recording training behaviour, and examining sensitivity to image perturbations. The repository includes three experiment workflows, preserved historical notebooks, and an offline execution check for the maintained ResNet-50 workflow.
 
-These are archived experiment notebooks. They retain saved outputs, and the original ResNet notebook requires repairs before a clean, top-to-bottom execution.
+**中文概述：** 本项目使用 ResNet 与 Vision Transformer 探索 CIFAR-100 图像分类，并分析噪声、亮度、对比度和局部遮挡对预测的影响。原始实验及输出完整保存在 `archive/`，整理后的笔记本放在 `notebooks/`。已修复 ResNet-50 的运行与统计问题；本次验证使用离线小样本，不代表新的分类准确率。
 
-## Notebook guide
+## Project overview
 
-| Notebook | Experiment | Configuration recorded in source |
+The work covers dataset preparation, classifier adaptation, training and evaluation loops, checkpoint saving, learning curves, and robustness evaluation. It is useful for studying how these pieces fit together and for continuing individual experiments with explicit settings.
+
+| Working notebook | Main workflow | Default configuration in the maintained code |
 | --- | --- | --- |
-| [ResNet_cifar100.ipynb](ResNet_cifar100.ipynb) | ImageNet-pretrained ResNet-50 with a replacement classifier; prediction visualizations and perturbation evaluation | Batch size 64, 20 epochs, SGD, learning rate 0.003, StepLR |
-| [ResNet_hyperparameterSearch.ipynb](ResNet_hyperparameterSearch.ipynb) | Configurable ResNet training with checkpointing and optional CUDA mixed precision | ResNet-101 by default, no pretrained weights, batch size 128, 100 epochs, SGD, learning rate 0.01, cosine schedule |
-| [ViT_cifar100.ipynb](ViT_cifar100.ipynb) | ImageNet-pretrained ViT-B/16 fine-tuning with a 100-class head | Images resized to 224 pixels, batch size 128, 20 epochs, AdamW, learning rate 0.0001, cosine schedule |
+| [ResNet-50](notebooks/ResNet_cifar100.ipynb) | ImageNet initialization, custom classifier, prediction plots, and five perturbation families | 32×32 inputs; batch 64; 20 epochs; SGD at 0.003; StepLR |
+| [Configurable ResNet](notebooks/ResNet_hyperparameterSearch.ipynb) | Select a ResNet variant, train, plot curves, and save best/periodic checkpoints | ResNet-101 without pretraining; 224×224 inputs; batch 128; 100 epochs; SGD at 0.01; cosine schedule |
+| [Vision Transformer](notebooks/ViT_cifar100.ipynb) | Fine-tune an ImageNet-pretrained ViT-B/16 with a 100-class head | 224×224 inputs; batch 128; 20 epochs; AdamW at 0.0001; cosine schedule |
 
-Despite its filename, `ResNet_hyperparameterSearch.ipynb` configures one selected architecture per execution; it does not implement an automated search over a parameter grid.
+The configurable ResNet notebook runs one selected configuration at a time. Its historical filename does not imply an automated hyperparameter search. The three configurations also differ in preprocessing and initialization, so their results are not a controlled architecture comparison.
 
-## Open the notebooks
+## Repository structure
 
-Use Python 3 and Jupyter. Imports reference PyTorch, torchvision, NumPy, Matplotlib, Pillow, and tqdm. There is no pinned environment file, so the following is a starting environment rather than an exact reconstruction of the original setup:
-
-```bash
-python3 -m venv .venv
-source .venv/bin/activate
-python -m pip install jupyterlab torch torchvision numpy matplotlib pillow tqdm
-jupyter lab
+```text
+notebooks/                   Maintained copies with cleared execution outputs
+archive/original-notebooks/   Original notebooks, including historical outputs
+archive/original_notebooks.json  Source revision and SHA-256 checksums
+tests/test_notebooks.py       Offline integrity and ResNet-50 execution checks
+docs/                        Reproduction, maintenance, and result interpretation
+requirements.txt             Working environment dependencies
+requirements-test.txt        Additional notebook-validation dependency
 ```
 
-The notebooks download CIFAR-100 into `data/`. Models configured with pretrained weights also download those weights. CUDA is used when available in the ViT and configurable ResNet notebooks; CPU training can be substantially slower. Review epoch count, batch size, and worker count before launching a run.
+Start with a working notebook to run an experiment, or open an [original notebook](archive/original-notebooks/) to inspect historical evidence. Dataset downloads and generated checkpoints are excluded from version control.
 
-See [reproducibility notes](docs/REPRODUCIBILITY.md) before interpreting results or running the original ResNet-50 notebook.
+## Getting started
 
-## Recorded outputs and their limits
+Use Python 3.12 and an environment suitable for your CPU or CUDA installation. The recorded validation environment is listed in the [reproduction guide](docs/REPRODUCIBILITY.md#validated-environment).
 
-The ViT notebook contains a saved final accuracy of **89.15%**. This is an output preserved in the notebook, not a result rerun or independently verified during documentation maintenance. The notebook chooses its best checkpoint using test-set accuracy, so that test set also acts as a model-selection set.
+```bash
+git clone https://github.com/yongjiang-niuniu/cifar-100.git
+cd cifar-100
+python3 -m venv .venv
+source .venv/bin/activate
+python -m pip install -r requirements.txt
+jupyter lab notebooks/
+```
 
-The original ResNet-50 notebook contains a saved **98.59%** accuracy with an evaluation count of **50,000 images**, while the dataset cell shows a separate test split of 10,000 images. Its dataloader uses an undefined `data_sets` variable instead of the defined `cifar100_datasets`. The saved value cannot be presented as a verified CIFAR-100 test benchmark.
+Select the environment's Python kernel and run cells from the beginning. The notebooks download CIFAR-100 into a relative `data/` directory. Pretrained configurations also download model weights. Generated `data/` and `saved_models/` paths are relative to the notebook kernel's working directory.
 
-The notebooks also differ in architecture, initialization, transforms, and training settings. Their saved outputs do not establish a controlled head-to-head comparison.
+Review batch size, epoch count, and worker count before a full run. CPU execution is supported by the ResNet-50 check, while the default 224-pixel experiments can require substantial memory and training time. The source chooses CUDA when available; Apple MPS is not selected automatically.
 
-## Learning focus
+## Maintenance and validation
 
-- Adapting pretrained image classifiers to a 100-class task.
-- Comparing training settings and learning-rate schedules.
-- Recording accuracy/loss curves and model checkpoints.
-- Exploring sensitivity to Gaussian noise, salt-and-pepper noise, brightness, contrast, and masked image patches.
+The ResNet-50 working copy now defines its transforms and device, uses consistent dataset/model names, computes sample-weighted mean loss, and binds each perturbation's severity correctly. Its sample visualization uses the same salt-and-pepper function as evaluation. The original files remain byte-for-byte intact; the new 32-pixel transforms are explicitly documented maintenance choices.
 
-## Archive contents
+Run the offline checks from the repository root:
 
-The repository contains three notebooks, including saved text and figure outputs. Dataset files and model checkpoints are not included. No repository-wide license or attribution record for a specific course/team is present; the documentation does not infer a course code or individual contribution breakdown.
+```bash
+python -m pip install -r requirements-test.txt
+python -m unittest discover -s tests -v
+```
+
+Two checks passed during this refresh: notebook/archive integrity, and a one-epoch CPU execution of the actual ResNet-50 training and evaluation cells using 16 generated training images and 11 generated test images. The check verifies checkpoint creation, 100-class outputs, loss averaging with an uneven final batch, and all 25 perturbation conditions. Network access is blocked in the test; pretrained weights are disabled. This exercises program behaviour rather than measuring CIFAR-100 accuracy.
+
+## Results and interpretation
+
+| Evidence | What it supports |
+| --- | --- |
+| Original ViT output: **89.15%** accuracy | A preserved historical result. The notebook selects its checkpoint using the test set; the result was not reproduced during this refresh. |
+| Original ResNet-50 output: **98.59%**, with **50,000** evaluated images | An inconsistent historical output: the declared test split contains 10,000 images and the old loader references an undefined dataset variable. It cannot establish test accuracy. |
+| Offline maintenance checks | The documented ResNet-50 code paths execute on generated fixtures, and originals remain intact. No new benchmark result is claimed. |
+
+ResNet-50 evaluates five levels of Gaussian noise, salt-and-pepper noise, brightness, contrast, and patch masking. These are 25 **conditions**: brightness and contrast at level 1 are identity settings. The final evaluation uses the in-memory model from the last epoch; it does not reload the checkpoint selected by minimum test loss.
+
+The notebooks retain their test-set model-selection behaviour. A new performance study should introduce a separate validation split and reserve the test set for final evaluation. See [full limitations and repair details](docs/REPRODUCIBILITY.md).
+
+## Contribution and preservation
+
+This repository is part of Yongjiang Liu's project collection. It preserves the experiment source and outputs and adds documented maintenance work without inventing a course attribution or individual/team contribution breakdown that the files do not establish.
+
+The repository was renamed from `cider-100` to **`cifar-100`** to match the dataset. It is the same GitHub repository with its existing history retained. The [archive manifest](archive/original_notebooks.json) records the original source commit and checksums. No new license is granted for the notebooks, downloaded datasets, model weights, or dependencies by this documentation.
+
+[Documentation guide](docs/README.md) · [Project portfolio](https://github.com/yongjiang-niuniu/academic-project-portfolio)
