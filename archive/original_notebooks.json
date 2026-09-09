@@ -1,0 +1,30 @@
+{
+  "source_commit": "86b7d485cc56b79da22be990e5bb9ba35525c642",
+  "former_repository_name": "cider-100",
+  "files": [
+    {
+      "original_path": "ResNet_cifar100.ipynb",
+      "archive_path": "archive/original-notebooks/ResNet_cifar100.ipynb",
+      "working_path": "notebooks/ResNet_cifar100.ipynb",
+      "original_bytes": 512610,
+      "original_sha256": "13fcbddcd2b77f6b9e2fda1160b3965448e72693e25571c37c89a7e772c51afd",
+      "archive_bytes_unchanged": true
+    },
+    {
+      "original_path": "ResNet_hyperparameterSearch.ipynb",
+      "archive_path": "archive/original-notebooks/ResNet_hyperparameterSearch.ipynb",
+      "working_path": "notebooks/ResNet_hyperparameterSearch.ipynb",
+      "original_bytes": 98274,
+      "original_sha256": "00e7b66f0cd2a76d2b26a2bd3f0790c95081078ee2eb5b827e55c9d71c01c317",
+      "archive_bytes_unchanged": true
+    },
+    {
+      "original_path": "ViT_cifar100.ipynb",
+      "archive_path": "archive/original-notebooks/ViT_cifar100.ipynb",
+      "working_path": "notebooks/ViT_cifar100.ipynb",
+      "original_bytes": 87815,
+      "original_sha256": "b79568f7eec8d58f4fdd8124218c6c9f9dd7e5a6b85ce4f46aea49cac986c7e6",
+      "archive_bytes_unchanged": true
+    }
+  ]
+}
