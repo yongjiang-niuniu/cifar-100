@@ -1,10 +1,12 @@
 # CIFAR-100 Image Classification Experiments
 
+**[Read the project report](Report.pdf)** · [Report details](docs/REPORT.md)
+
 PyTorch experiments for adapting **ResNet and Vision Transformer classifiers to CIFAR-100**, recording training behaviour, and examining sensitivity to image perturbations. The repository includes three experiment workflows, preserved historical notebooks, and an offline execution check for the maintained ResNet-50 workflow.
 
 **中文概述：** 本项目使用 ResNet 与 Vision Transformer 探索 CIFAR-100 图像分类，并分析噪声、亮度、对比度和局部遮挡对预测的影响。原始实验及输出完整保存在 `archive/`，整理后的笔记本放在 `notebooks/`。已修复 ResNet-50 的运行与统计问题；本次验证使用离线小样本，不代表新的分类准确率。
 
-**Related paper:** [Deep Learning and Robotics](reports/README.md), authored by Yongjiang Liu, was recovered from the Overleaf project *Cognitive Robotic*. Its original footnote links to `yongjiangliu-uom/cider-100`, identifying this project despite the different paper title. The preserved reading copy was compiled locally from the unchanged recovered source on 10 September 2026; its relationship to the notebooks and reported results is documented below.
+**Related paper:** [Deep Learning and Robotics](docs/REPORT.md), authored by Yongjiang Liu, was recovered from the Overleaf project *Cognitive Robotic*. Its original footnote links to `yongjiangliu-uom/cider-100`, identifying this project despite the different paper title. The preserved reading copy was compiled locally from the unchanged recovered source on 10 September 2026; its relationship to the notebooks and reported results is documented below.
 
 ## Project overview
 
@@ -26,12 +28,14 @@ archive/original-notebooks/   Original notebooks, including historical outputs
 archive/original_notebooks.json  Source revision and SHA-256 checksums
 tests/test_notebooks.py       Offline integrity and ResNet-50 execution checks
 docs/                        Reproduction, maintenance, and result interpretation
-reports/                     Recovered paper, local-build provenance and version comparison
+Report.pdf                   Final paper
+latex/                       Paper source and figures
+docs/                        Report provenance and limitations
 requirements.txt             Working environment dependencies
 requirements-test.txt        Additional notebook-validation dependency
 ```
 
-Start with a working notebook to run an experiment, or open an [original notebook](archive/original-notebooks/) to inspect historical evidence. Dataset downloads and generated checkpoints are excluded from version control.
+Start with a working notebook to run an experiment, or open an [original notebook](archive/original-notebooks) to inspect historical evidence. Dataset downloads and generated checkpoints are excluded from version control.
 
 ## Getting started
 
@@ -75,7 +79,7 @@ ResNet-50 evaluates five levels of Gaussian noise, salt-and-pepper noise, bright
 
 The notebooks retain their test-set model-selection behaviour. A new performance study should introduce a separate validation split and reserve the test set for final evaluation. See [full limitations and repair details](docs/REPRODUCIBILITY.md).
 
-The recovered paper describes ImageNet-21k pretraining, W&B sweeps and a ViT result of 87.23%. The available ViT notebook uses ImageNet-1k weights and preserves a different historical output of 89.15%; the configurable ResNet notebook does not contain an automated sweep. The paper includes W&B plots, but the complete sweep configuration and run exports have not been recovered. These are related project artifacts, not a verified one-to-one reconstruction of every reported experiment. See the [paper and notebook comparison](reports/README.md#relationship-to-the-notebooks).
+The recovered paper describes ImageNet-21k pretraining, W&B sweeps and a ViT result of 87.23%. The available ViT notebook uses ImageNet-1k weights and preserves a different historical output of 89.15%; the configurable ResNet notebook does not contain an automated sweep. The paper includes W&B plots, but the complete sweep configuration and run exports have not been recovered. These are related project artifacts, not a verified one-to-one reconstruction of every reported experiment. See the [paper and notebook comparison](docs/REPORT.md#relationship-to-the-notebooks).
 
 ## Contribution and preservation
 

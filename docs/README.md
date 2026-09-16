@@ -6,7 +6,7 @@
 | --- | --- |
 | [Project overview](../README.md) | Experiment choices, file map, environment setup, and results |
 | [Reproduction and maintenance](REPRODUCIBILITY.md) | Exact repair scope, tested environment, offline checks, and remaining methodological limitations |
-| [Original notebooks](../archive/original-notebooks/) | Historical source, text output, and figures |
+| [Original notebooks](../archive/original-notebooks) | Historical source, text output, and figures |
 | [Original-file manifest](../archive/original_notebooks.json) | Former path, preserved source revision, and integrity hashes |
-| [Working notebooks](../notebooks/) | Cleared copies for further execution |
+| [Working notebooks](../notebooks) | Cleared copies for further execution |
 | [Offline checks](../tests/test_notebooks.py) | Actual structural and execution assertions |

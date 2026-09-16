@@ -1,6 +1,6 @@
 # Deep Learning and Robotics
 
-**[Read the five-page paper](overleaf/2026-09-10/Cognitive_Robotic.pdf)** — Yongjiang Liu.
+**[Read the five-page paper](../Report.pdf)** — Yongjiang Liu.
 
 The paper combines a review of robotic perception, motion and interaction with CIFAR-100 experiments using ResNet and ViT-B/16. Its discussions of LLMs, reinforcement learning and embodied agents are literature context, not evidence that this project implemented or deployed those systems.
 
@@ -35,7 +35,7 @@ Reported values are preserved historical statements. No training or benchmark ev
 
 ## Build and preservation
 
-Overleaf compilation timed out during recovery, so the downloaded source was checked for unsafe archive paths and extracted into an isolated audit directory. All ten original files were preserved. A separate build copy compiled successfully with Tectonic without changing any source file or body text. The original source ZIP remains in the local recovery archive; it is not included in this repository update.
+Overleaf compilation timed out during recovery, so the downloaded source was checked for unsafe archive paths and extracted into an isolated audit directory. All ten original files were preserved. A separate build copy compiled successfully with Tectonic without changing any source file or body text. The manuscript, bibliography, style files and four experiment figures are now preserved in [latex/](../latex/). `PaperForReview.tex` is named `main.tex` there without changing its bytes; the unused rebuttal template and template README are omitted.
 
 | Artifact | SHA-256 / size |
 | --- | --- |
@@ -44,4 +44,4 @@ Overleaf compilation timed out during recovery, so the downloaded source was che
 
 All five PDF pages were visually checked. Tables, figures and text are readable without page clipping or overlap. Existing source issues remain visible: the missing `mehta2021mobilevit` bibliography entry produces `[?]` on page 4; one bibliography entry has an empty journal field, and the compiler reports paragraph-spacing and a small table-width warning. These were recorded rather than silently altering the original report. The old repository URL and author name are unchanged.
 
-[Back to the project](../README.md) · [Notebook reproduction notes](../docs/REPRODUCIBILITY.md)
+[Back to the project](../README.md) · [Notebook reproduction notes](REPRODUCIBILITY.md)
